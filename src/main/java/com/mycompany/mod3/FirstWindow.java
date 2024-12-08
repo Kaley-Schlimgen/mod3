@@ -4,36 +4,39 @@
  */
 package com.mycompany.mod3;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileWriter;
+import java.io.IOException;
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
  *
  * @author kaleyschlimgen
  */
 public class FirstWindow extends JFrame {
+    private JTextField inputField;
 
     public FirstWindow() {
-        JFrame frame = new JFrame("User Interface");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(200, 100);
- /*
-        JPanel panel = new JPanel();
-        JTextArea textArea = new JTextArea(1, 10);
- */       
+        setTitle("User Interface");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(300, 100);
+ 
         // Create the menu bar
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
 
-        // Create the "File" menu
+        // Create the menu
         JMenu fileMenu = new JMenu("Menu");
-        //JTextArea textArea = new JTextArea(10, 20);
         JMenuItem dateTimeMenuItem = new JMenuItem("Date & Time");
         JMenuItem textFileMenuItem = new JMenuItem("Write to Text File");
         JMenuItem greenFileMenuItem = new JMenuItem("Green");
@@ -44,6 +47,74 @@ public class FirstWindow extends JFrame {
         fileMenu.addSeparator();
         fileMenu.add(exitMenuItem);
         
+        // Add menus to the menu bar
+        menuBar.add(fileMenu);
+
+        dateTimeMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new SecondWindow(inputField.getText());
+                //new SecondWindow();
+                
+            }
+        });
+        
+        textFileMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try (FileWriter writer = new FileWriter("log.txt")) {
+                    writer.write(inputField.getText());
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+        
+        greenFileMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getContentPane().setBackground(Color.GREEN);
+            }
+        });
+  // Create input field
+  // Create the panel
+        JPanel panel = new JPanel();
+        //panel.setBackground(Color.LIGHT_GRAY);
+        add(panel);
+        panel.add(inputPanel(), BorderLayout.NORTH);
+
+        // Make the frame visible
+        setVisible(true);
+
+    }
+        
+        private JPanel inputPanel(){
+        JPanel panel = new JPanel();
+
+        inputField = new JTextField(5);
+        inputField.setEditable(true);
+        inputField.setText("0");
+        
+        JPanel inputPanel = new JPanel();
+        inputPanel.add(new JLabel("Write to text file:"));
+        inputPanel.add(inputField);
+        
+ /*       dateTimeMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new SecondWindow(inputField.getText());
+                //new SecondWindow();
+                
+            }
+        });
+ */
+        panel.add(inputPanel, BorderLayout.NORTH);
+
+        return panel;
+        }
+}
+
+ /*       
         dateTimeMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -55,34 +126,5 @@ public class FirstWindow extends JFrame {
                 newWindow.setVisible(true);
             }
         });
-        
-/*        textFileMenuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try (FileWriter writer = new FileWriter("log.txt")) {
-                    writer.write(textArea.getText());
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
-*/        
-        greenFileMenuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                getContentPane().setBackground(Color.GREEN);
-            }
-        });
+ */       
 
-        // Add menus to the menu bar
-        menuBar.add(fileMenu);
-        
-        // Set the menu bar for the frame
-        frame.setJMenuBar(menuBar);
-      
- //       panel.add(textArea);
- //       frame.add(panel);
-  
-        frame.setVisible(true);
-    }
-}
