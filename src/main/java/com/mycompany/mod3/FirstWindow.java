@@ -8,6 +8,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -18,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -26,19 +28,18 @@ import javax.swing.JTextField;
  * @author kaleyschlimgen
  */
 public class FirstWindow extends JFrame {
-    private JTextField timeDateField;
+    public JTextField timeDateField;
 
     public FirstWindow() {
         JFrame frame = new JFrame("User Interface");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(200, 200);
         frame.setLayout(new BorderLayout());
- 
-        // Create the menu bar
+        
+        // Create the menu bar and menu
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
 
-        // Create the menu
         JMenu fileMenu = new JMenu("Menu");
         
         JMenuItem dateTimeMenuItem = new JMenuItem("Date & Time");
@@ -56,14 +57,18 @@ public class FirstWindow extends JFrame {
         // Add menus to the menu bar
         menuBar.add(fileMenu);
         
-
+        //get time and date
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formattedDateTime = now.format(formatter);
-        //JLabel label = new JLabel(formattedDateTime);
-
- 
         
+        //create field for date and time
+        timeDateField = new JTextField(20);
+        timeDateField.setVisible(false);
+        add(timeDateField, BorderLayout.NORTH);
+        
+        
+        //ActionListener for getting date and time for menu item no. 1
         dateTimeMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -72,35 +77,41 @@ public class FirstWindow extends JFrame {
             }
         });
     
+        //ActionListener for saving text to log.txt with menu item no. 2
         textFileMenuItem.addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
-                try (FileWriter writer = new FileWriter("log.txt")) {
-                    writer.write(timeDateField.getText());
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
+                saveToFile();
             }
         });
         
-        
+        //ActionListener for getting a random shade of green with menu item no. 3
         greenFileMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //panel.setBackground(Color.GREEN);
-                //getContentPane().setBackground(Color.GREEN);
                 getContentPane().setBackground(SecondWindow.getRandomGreenHue());
             }
         });
         
-        timeDateField = new JTextField(20);
-        timeDateField.setVisible(false);
-        add(timeDateField, BorderLayout.NORTH);
+        //ActionListener for exiting the program with menu item no. 4       
+        exitMenuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
         
         setVisible(true);
            
-
     }
+    
+    private void saveToFile() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("log.txt"))) {
+            writer.write(timeDateField.getText());
+            JOptionPane.showMessageDialog(this, "Text saved to log.txt");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error saving file: " + ex.getMessage());
+        }
+    }
+
 
 }
 

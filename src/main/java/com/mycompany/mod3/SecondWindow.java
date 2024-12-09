@@ -10,73 +10,26 @@ package com.mycompany.mod3;
  */
 
 import java.awt.Color;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Random;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 public class SecondWindow {
+
 
     public static Color getRandomGreenHue() {
         Random random = new Random();
 
-        // Keep red and blue components low to ensure a green hue
-        int red = random.nextInt(100); 
-        int green = 150 + random.nextInt(106); // Green value between 150 and 255
-        int blue = random.nextInt(100); 
+        int red = 0;
+        int green = random.nextInt(256);
+        int blue = 0;
 
         return new Color(red, green, blue);
     }
+    
+ 
+    
 }
-/*extends JDialog {
- //   private JTextField num1Field, num2Field;
-      
-        
-        public JPanel SecondWindow() {
-            JPanel panel = new JPanel();
-
-
-        
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String formattedDateTime = now.format(formatter);
-        JLabel label = new JLabel(formattedDateTime);
-        
-        panel.add(label);
-        
-
-        
-        return panel;
-
-
- //input from other class
- //           balanceLabel = new JLabel(text);
-/*
-        setTitle("SECOND WINDOW");
-        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        setSize(300, 100);
-        JPanel mainPanel = new JPanel(new BorderLayout());
-        
-        mainPanel.add(dateTimePanel(), BorderLayout.NORTH);
-
-        add(mainPanel);
-
-        setVisible(true);
-*/
-    //}
-/*        private JPanel dateTimePanel() {
-            
-        JPanel panel = new JPanel();
-
-
-        
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String formattedDateTime = now.format(formatter);
-        JLabel label = new JLabel(formattedDateTime);
-        
-        panel.add(label);
-        
-
-        
-        return panel;       
-    }
-        */
-//}
