@@ -10,16 +10,11 @@ package com.mycompany.mod3;
  */
 
 import java.awt.Color;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Random;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
 public class SecondWindow {
 
-
+    //Method for displaying random hue of green
     public static Color getRandomGreenHue() {
         Random random = new Random();
 

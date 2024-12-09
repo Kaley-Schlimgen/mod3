@@ -5,7 +5,6 @@
 package com.mycompany.mod3;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
@@ -13,14 +12,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import javax.swing.BorderFactory;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 /**
@@ -31,24 +27,23 @@ public class FirstWindow extends JFrame {
     public JTextField timeDateField;
 
     public FirstWindow() {
-        JFrame frame = new JFrame("User Interface");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(200, 200);
-        frame.setLayout(new BorderLayout());
-        
+        setTitle("User Interface");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(200, 200);
+    
         // Create the menu bar and menu
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
 
         JMenu fileMenu = new JMenu("Menu");
         
-        JMenuItem dateTimeMenuItem = new JMenuItem("Date & Time");
+        JMenuItem dateTimeMenuItem = new JMenuItem("Display Date & Time");
         fileMenu.add(dateTimeMenuItem);
         
         JMenuItem textFileMenuItem = new JMenuItem("Write to Text File");
         fileMenu.add(textFileMenuItem);
         
-        JMenuItem greenFileMenuItem = new JMenuItem("Green");
+        JMenuItem greenFileMenuItem = new JMenuItem("Random Green");
         fileMenu.add(greenFileMenuItem);
         
         JMenuItem exitMenuItem = new JMenuItem("Exit");
@@ -57,12 +52,12 @@ public class FirstWindow extends JFrame {
         // Add menus to the menu bar
         menuBar.add(fileMenu);
         
-        //get time and date
+        //Get time and date
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formattedDateTime = now.format(formatter);
         
-        //create field for date and time
+        //Create field for date and time
         timeDateField = new JTextField(20);
         timeDateField.setVisible(false);
         add(timeDateField, BorderLayout.NORTH);
@@ -103,6 +98,7 @@ public class FirstWindow extends JFrame {
            
     }
     
+    //Method for saving text to file
     private void saveToFile() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("log.txt"))) {
             writer.write(timeDateField.getText());
