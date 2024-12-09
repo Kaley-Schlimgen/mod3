@@ -10,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -24,12 +26,13 @@ import javax.swing.JTextField;
  * @author kaleyschlimgen
  */
 public class FirstWindow extends JFrame {
-    private JTextField inputField;
+    private JTextField timeDateField;
 
     public FirstWindow() {
-        setTitle("User Interface");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(300, 100);
+        JFrame frame = new JFrame("User Interface");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(200, 200);
+        frame.setLayout(new BorderLayout());
  
         // Create the menu bar
         JMenuBar menuBar = new JMenuBar();
@@ -37,94 +40,68 @@ public class FirstWindow extends JFrame {
 
         // Create the menu
         JMenu fileMenu = new JMenu("Menu");
+        
         JMenuItem dateTimeMenuItem = new JMenuItem("Date & Time");
-        JMenuItem textFileMenuItem = new JMenuItem("Write to Text File");
-        JMenuItem greenFileMenuItem = new JMenuItem("Green");
-        JMenuItem exitMenuItem = new JMenuItem("Exit");
         fileMenu.add(dateTimeMenuItem);
+        
+        JMenuItem textFileMenuItem = new JMenuItem("Write to Text File");
         fileMenu.add(textFileMenuItem);
+        
+        JMenuItem greenFileMenuItem = new JMenuItem("Green");
         fileMenu.add(greenFileMenuItem);
-        fileMenu.addSeparator();
+        
+        JMenuItem exitMenuItem = new JMenuItem("Exit");
         fileMenu.add(exitMenuItem);
         
         // Add menus to the menu bar
         menuBar.add(fileMenu);
+        
 
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedDateTime = now.format(formatter);
+        //JLabel label = new JLabel(formattedDateTime);
+
+ 
+        
         dateTimeMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new SecondWindow(inputField.getText());
-                //new SecondWindow();
-                
+                timeDateField.setText(formattedDateTime);
+                timeDateField.setVisible(true);
             }
         });
-        
+    
         textFileMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try (FileWriter writer = new FileWriter("log.txt")) {
-                    writer.write(inputField.getText());
+                    writer.write(timeDateField.getText());
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
             }
         });
         
+        
         greenFileMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                getContentPane().setBackground(Color.GREEN);
+                //panel.setBackground(Color.GREEN);
+                //getContentPane().setBackground(Color.GREEN);
+                getContentPane().setBackground(SecondWindow.getRandomGreenHue());
             }
         });
-  // Create input field
-  // Create the panel
-        JPanel panel = new JPanel();
-        //panel.setBackground(Color.LIGHT_GRAY);
-        add(panel);
-        panel.add(inputPanel(), BorderLayout.NORTH);
-
-        // Make the frame visible
+        
+        timeDateField = new JTextField(20);
+        timeDateField.setVisible(false);
+        add(timeDateField, BorderLayout.NORTH);
+        
         setVisible(true);
+           
 
     }
-        
-        private JPanel inputPanel(){
-        JPanel panel = new JPanel();
 
-        inputField = new JTextField(5);
-        inputField.setEditable(true);
-        inputField.setText("0");
-        
-        JPanel inputPanel = new JPanel();
-        inputPanel.add(new JLabel("Write to text file:"));
-        inputPanel.add(inputField);
-        
- /*       dateTimeMenuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new SecondWindow(inputField.getText());
-                //new SecondWindow();
-                
-            }
-        });
- */
-        panel.add(inputPanel, BorderLayout.NORTH);
-
-        return panel;
-        }
 }
 
- /*       
-        dateTimeMenuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFrame newWindow = new JFrame("Date & Time");
-//only prints one of these
-                newWindow.add(new JLabel("Today's Date:"));
-                newWindow.add(new JLabel("Today's Time:"));
-                newWindow.setSize(300, 200);
-                newWindow.setVisible(true);
-            }
-        });
- */       
 

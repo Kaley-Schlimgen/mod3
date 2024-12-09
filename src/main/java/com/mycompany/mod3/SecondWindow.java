@@ -9,30 +9,46 @@ package com.mycompany.mod3;
  * @author kaleyschlimgen
  */
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.GridLayout;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import java.util.Random;
 
+public class SecondWindow {
 
-public class SecondWindow extends JDialog {
+    public static Color getRandomGreenHue() {
+        Random random = new Random();
+
+        // Keep red and blue components low to ensure a green hue
+        int red = random.nextInt(100); 
+        int green = 150 + random.nextInt(106); // Green value between 150 and 255
+        int blue = random.nextInt(100); 
+
+        return new Color(red, green, blue);
+    }
+}
+/*extends JDialog {
  //   private JTextField num1Field, num2Field;
       
         
-        public SecondWindow (String text) {
+        public JPanel SecondWindow() {
+            JPanel panel = new JPanel();
+
+
+        
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedDateTime = now.format(formatter);
+        JLabel label = new JLabel(formattedDateTime);
+        
+        panel.add(label);
+        
+
+        
+        return panel;
 
 
  //input from other class
  //           balanceLabel = new JLabel(text);
-
+/*
         setTitle("SECOND WINDOW");
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setSize(300, 100);
@@ -43,8 +59,9 @@ public class SecondWindow extends JDialog {
         add(mainPanel);
 
         setVisible(true);
-    }
-        private JPanel dateTimePanel() {
+*/
+    //}
+/*        private JPanel dateTimePanel() {
             
         JPanel panel = new JPanel();
 
@@ -61,4 +78,5 @@ public class SecondWindow extends JDialog {
         
         return panel;       
     }
-}
+        */
+//}
